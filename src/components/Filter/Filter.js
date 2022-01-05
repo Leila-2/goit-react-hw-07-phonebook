@@ -15,10 +15,5 @@ Filter.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func,
 };
-// const mapStateToProps = (state) => ({ value: state.contacts.filter });
-
-// const mapDispatchToProps = (dispatch) => ({
-//   onChange: (e) => dispatch(changeFilter(e.target.value)),
-// });
 
 export default Filter;

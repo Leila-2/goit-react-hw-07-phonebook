@@ -19,7 +19,7 @@ function App() {
 
   return (
     <div className="App">
-      {/* <Form /> */}
+      <Form />
       <Filter onChange={(e) => setFilter(e.target.value)} />
       {isFetching ? (
         <h1>Loading...</h1>
@@ -29,11 +29,5 @@ function App() {
     </div>
   );
 }
-
-// const mapDispatchToProps = (dispatch) => ({
-//   onSubmit: ({ name, number }) => dispatch(addContact({ name, number })),
-// });
-
-// export default connect(null, mapDispatchToProps)(App);
 
 export default App;

@@ -1,84 +1,55 @@
-// import { useState } from "react";
-// import PropTypes from "prop-types";
-// import { Section } from "../Section/Section";
-// import s from "../Form/Form.module.css";
-// import { connect, useSelector } from "react-redux";
-// import { addContact } from "../../redux/contacts-actions";
-// import { useFetchContactsQuery } from "../../redux/slice";
+import PropTypes from "prop-types";
+import { Section } from "../Section/Section";
+import s from "../Form/Form.module.css";
 
-// function Form() {
+import { useCreateContactMutation } from "../../redux/slice";
 
-//   const { data } = useFetchContactsQuery()
-//   // const [number, setNumber] = useState("");
-//   // const [name, setName] = useState("");
-//   // const contacts = useSelector((state) => state.contacts.items);
-//   // console.log(contacts);
+function Form() {
+  const [createContact, { isLoading }] = useCreateContactMutation();
+  //const { data } = useFetchContactsQuery()
 
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     onSubmit({ name, number });
-//     reset();
-//   };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    createContact({
+      name: e.currentTarget.elements.name.value,
+      number: e.currentTarget.elements.number.value,
+    });
+    e.currentTarget.reset();
+  };
 
-//   const reset = () => {
-//     setName("");
-//     setNumber("");
-//   };
+  return (
+    <Section title="Phonebook">
+      <form className={s.form} onSubmit={handleSubmit}>
+        <label htmlFor="input-name">Name</label>
+        <input
+          type="text"
+          name="name"
+          id="input-name"
+          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+          required
+        />
+        <label htmlFor="input-number">Number</label>
+        <input
+          type="tel"
+          name="number"
+          id="input-number"
+          pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+          title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+          required
+        />
+        <button type="submit">
+          {isLoading ? "Loading..." : "Add contact"}
+        </button>
+      </form>
+    </Section>
+  );
+}
 
-//   const handleChange = (e) => {
-//     console.log(e.target.value);
-//     const { name, value } = e.target;
+export default Form;
 
-//     switch (name) {
-//       case "name":
-//         setName(value);
-//         break;
-//       case "number":
-//         setNumber(value);
-//         break;
-//       default:
-//         return;
-//     }
-//   };
-
-//   return (
-//     <Section title="Phonebook">
-//       <form className={s.form} onSubmit={handleSubmit}>
-//         <label htmlFor="input-name">Name</label>
-//         <input
-//           type="text"
-//           name="name"
-//           value={name}
-//           id="input-name"
-//           onChange={handleChange}
-//           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-//           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-//           required
-//         />
-//         <label htmlFor="input-number">Number</label>
-//         <input
-//           type="tel"
-//           name="number"
-//           value={number}
-//           id="input-number"
-//           onChange={handleChange}
-//           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-//           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-//           required
-//         />
-//         <button type="submit">Add contact</button>
-//       </form>
-//     </Section>
-//   );
-// }
-// // const mapDispatchToProps = (dispatch) => ({
-// //   onSubmit: ({ name, number }) => dispatch(addContact({ name, number })),
-// // });
-
-// export default Form;
-
-// Form.propTypes = {
-//   onSubmit: PropTypes.func,
-//   value: PropTypes.string,
-//   onChange: PropTypes.func,
-// };
+Form.propTypes = {
+  onSubmit: PropTypes.func,
+  value: PropTypes.string,
+  onChange: PropTypes.func,
+};

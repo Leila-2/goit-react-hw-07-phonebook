@@ -21,7 +21,7 @@ function ContactsItem({ id, name, number }) {
   );
 }
 ContactsItem.propTypes = {
-  id: PropTypes.number,
+  id: PropTypes.string,
   name: PropTypes.string,
   number: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
